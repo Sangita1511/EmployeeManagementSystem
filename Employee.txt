@@ -1,0 +1,151 @@
+#include <stdio.h>
+#include <string.h>
+
+
+struct Date {
+    int dd, mm, yy;
+};
+
+
+struct Employee {
+    int Empno;
+    char EmpName[50];
+    struct Date hiredate;
+    float BasicSalary;
+    float NetSalary;
+};
+
+// Function to accept employee data
+
+void AcceptEmployeeData(struct Employee *emp) {
+    printf("Enter Employee Number: ");
+    scanf("%d", &emp->Empno);
+    
+    printf("Enter Employee Name: ");
+    scanf(" %[^\n]s", emp->EmpName);
+    
+    printf("Enter Hire Date (dd mm yyyy): ");
+    scanf("%d %d %d", &emp->hiredate.dd, &emp->hiredate.mm, &emp->hiredate.yy);
+    
+    printf("Enter Basic Salary: ");
+    scanf("%f", &emp->BasicSalary);
+}
+
+// Function to calculate net pay
+
+void CalculateNetPay(struct Employee *emp) {
+    float DA = 0.4 * emp->BasicSalary;
+    float TA = 0.1 * emp->BasicSalary;
+    float PF = 0.05 * emp->BasicSalary;
+    
+    emp->NetSalary = emp->BasicSalary + DA + TA - PF;
+}
+
+// Function to show employee data
+
+void ShowEmployeeData(struct Employee emp) {
+    printf("Employee Number: %d\n", emp.Empno);
+    printf("Employee Name: %s\n", emp.EmpName);
+    printf("Hire Date: %02d/%02d/%04d\n", emp.hiredate.dd, emp.hiredate.mm, emp.hiredate.yy);
+    printf("Basic Salary: %.2f\n", emp.BasicSalary);
+    printf("Net Salary: %.2f\n", emp.NetSalary);
+}
+
+int main() {
+    struct Employee employees[100]; 
+    int numEmployees = 0;
+    int choice;
+
+    while (1) {
+        printf("\nEmployee Management System\n");
+        printf("1. Add Employee\n");
+        printf("2. Show Employee Data\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                if (numEmployees < 100) {
+                    printf("\nEnter Employee Details:\n");
+                    AcceptEmployeeData(&employees[numEmployees]);
+                    CalculateNetPay(&employees[numEmployees]);
+                    numEmployees++;
+                    printf("Employee added successfully!\n");
+                } else {
+                    printf("Maximum employee limit reached!\n");
+                }
+                break;
+
+            
+
+          
+            case 2:
+                if (numEmployees > 0) {
+                    printf("\nList of All Employees:\n");
+                    for (int i = 0; i < numEmployees; i++) {
+                        ShowEmployeeData(employees[i]);
+                        printf("\n");
+                    }
+                } else {
+                    printf("No employees in the database!\n");
+                }
+                break;
+
+            case 3:
+                printf("Exiting the program.\n");
+                return 0;
+
+            default:
+                printf("Invalid choice! Please enter a valid option.\n");
+                break;
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+OUTPUT:
+
+Employee Management System
+1. Add Employee
+2. Show Employee Data
+3. Exit
+Enter your choice: 1
+Enter Employee Details:
+Enter Employee Number: 201223
+Enter Employee Name: Sangita
+Enter Hire Date (dd mm yyyy): 24 08 2023
+Enter Basic Salary: 500000
+Employee added successfully!
+
+Employee Management System
+1. Add Employee
+2. Show Employee Data
+3. Exit
+Enter your choice: 2
+List of All Employees:
+Employee Number: 201223
+Employee Name: Sangita
+Hire Date: 24/08/2023
+Basic Salary: 500000.00
+Net Salary: 725000.00
+
+
+Employee Management System
+1. Add Employee
+2. Show Employee Data
+3. Exit
+Enter your choice: 3
+Exiting the program.
